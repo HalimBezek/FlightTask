@@ -1,8 +1,6 @@
 ﻿using FlightTaskProject;
 
 
-Console.WriteLine("Hello, World!");
-
 try
 {
 	Application.RunApp();
