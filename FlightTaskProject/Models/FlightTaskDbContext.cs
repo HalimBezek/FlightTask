@@ -4,13 +4,13 @@ using Microsoft.EntityFrameworkCore;
 
 namespace FlightTaskProject.Models;
 
-public partial class PostgresContext : DbContext
+public partial class FlightTaskDbContext : DbContext
 {
-    public PostgresContext()
+    public FlightTaskDbContext()
     {
     }
 
-    public PostgresContext(DbContextOptions<PostgresContext> options)
+    public FlightTaskDbContext(DbContextOptions<FlightTaskDbContext> options)
         : base(options)
     {
     }
@@ -21,18 +21,24 @@ public partial class PostgresContext : DbContext
 
     public virtual DbSet<Subscription> Subscriptions { get; set; }
 
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        => optionsBuilder.UseNpgsql("Host=localhost; Database=postgres; Username=postgres;Password=1234;");
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) 
+	    => optionsBuilder.UseNpgsql("Host=localhost;Database=FlightTaskDB;Username=postgres;Password=1234");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.HasPostgresExtension("pg_catalog", "adminpack");
-
         modelBuilder.Entity<Flight>(entity =>
         {
             entity.HasKey(e => e.FlightId).HasName("flights_pk");
 
             entity.ToTable("flights");
+
+            entity.HasIndex(e => e.AirlineId, "flights_airline_id_idx");
+
+            entity.HasIndex(e => e.ArrivalTime, "flights_arrival_time_idx");
+
+            entity.HasIndex(e => e.DepartureTime, "flights_departure_time_idx");
+
+            entity.HasIndex(e => e.RouteId, "flights_route_id_idx");
 
             entity.Property(e => e.FlightId)
                 .ValueGeneratedNever()
@@ -87,6 +93,12 @@ public partial class PostgresContext : DbContext
             entity.HasKey(e => e.Id).HasName("subscriptions_pk");
 
             entity.ToTable("subscriptions");
+
+            entity.HasIndex(e => e.AgencyId, "subscriptions_agency_id_idx");
+
+            entity.HasIndex(e => e.DestinationCityId, "subscriptions_destination_city_id_idx");
+
+            entity.HasIndex(e => e.OriginCityId, "subscriptions_origin_city_id_idx");
 
             entity.Property(e => e.Id).HasColumnName("id");
             entity.Property(e => e.AgencyId).HasColumnName("agency_id");

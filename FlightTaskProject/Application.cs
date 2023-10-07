@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using FlightTaskProject.Helpers;
+using FlightTaskProject.Extensions.Helpers;
 
 namespace FlightTaskProject
 {
-	public static class Application
+    public static class Application
 	{
 		public static void RunApp()
 		{
@@ -27,9 +27,9 @@ namespace FlightTaskProject
 			    provided = Console.ReadLine();
 			} 
 
+
+
 			Console.WriteLine(provided);
 		}
-		
-	
 	}
 }
