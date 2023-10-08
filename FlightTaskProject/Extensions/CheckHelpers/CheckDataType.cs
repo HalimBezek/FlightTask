@@ -1,13 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace FlightTaskProject.Extensions.Helpers
+﻿namespace FlightTaskProject.Extensions.CheckHelpers
 {
-    internal class CheckDataType
-    {
+    internal class CheckDataType: ICheckDataType
+	{
         /// <summary>
         /// Check int data type
         /// </summary>

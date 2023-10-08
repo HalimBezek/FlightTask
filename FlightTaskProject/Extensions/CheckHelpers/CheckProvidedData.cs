@@ -1,14 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace FlightTaskProject.Extensions.Helpers
+﻿namespace FlightTaskProject.Extensions.CheckHelpers
 {
-    internal class CheckProvidedData
-    {
-        private CheckDataType _checkData;
+    internal class CheckProvidedData: ICheckProvidedData
+	{
+        private ICheckDataType _checkData;
 
         /// <summary>
         /// Check provided data for all exceptional typing

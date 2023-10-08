@@ -9,6 +9,6 @@ namespace FlightTaskProject.Extensions.CreateCSVFile
 {
 	public interface ICreateCSVFile
 	{
-		public void CreateFile(DataSet data);
+		public Task CreateFile();
 	}
 }

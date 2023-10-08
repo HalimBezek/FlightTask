@@ -1,15 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using FlightTaskProject.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace FlightTaskProject.Models;
+namespace FlightTaskProject.DataContext;
 
 public partial class FlightTaskDbContext : DbContext
-{
-    public FlightTaskDbContext()
-    {
-    }
-
+{ 
     public FlightTaskDbContext(DbContextOptions<FlightTaskDbContext> options)
         : base(options)
     {
@@ -21,8 +18,8 @@ public partial class FlightTaskDbContext : DbContext
 
     public virtual DbSet<Subscription> Subscriptions { get; set; }
 
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) 
-	    => optionsBuilder.UseNpgsql("Host=localhost;Database=FlightTaskDB;Username=postgres;Password=1234");
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        => optionsBuilder.UseNpgsql("Host=localhost;Database=FlightTaskDB;Username=postgres;Password=1234");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
