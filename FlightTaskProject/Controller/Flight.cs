@@ -1,18 +1,16 @@
-﻿using FlightTaskProject.Business.Model;
-using FlightTaskProject.DataContext;
-using FlightTaskProject.Extensions.CreateCSVFile;
-using Microsoft.EntityFrameworkCore;
+﻿using FlightTaskProject.Business;
+using FlightTaskProject.Controller.Model;
 
-namespace FlightTaskProject.Business;
+namespace FlightTaskProject.Controller;
 
-public class Flight
+public class Flight: IFlight
 {
-	private readonly FindFlight _findFligh;
-	public Flight(FindFlight findFlight)
+	private readonly IFindFlight _findFligh;
+	public Flight(IFindFlight findFlight)
 	{
 		_findFligh = findFlight;
 	}
-	public async Task Run(QueryParam queryParam)
+	public async Task Run(QueryModel queryParam)
 	{
 		await _findFligh.CreateData(queryParam);
 	}

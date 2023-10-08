@@ -1,4 +1,5 @@
 ﻿using FlightTaskProject.Business;
+using FlightTaskProject.Controller;
 using FlightTaskProject.DataContext;
 using FlightTaskProject.Extensions.CheckHelpers;
 using FlightTaskProject.Extensions.CreateCSVFile;
@@ -15,9 +16,9 @@ try
 	services.AddSingleton<ICheckProvidedData, CheckProvidedData>();
 	services.AddSingleton<ICheckDataType, CheckDataType>();
 	services.AddSingleton<ICreateCSVFile, CreateCSVFile>();
-	services.AddSingleton<Flight, Flight>();
-	services.AddSingleton<FindFlight, FindFlight>();
-	services.AddSingleton<FlightStatus, FlightStatus>();
+	services.AddSingleton<IFlight, Flight>();
+	services.AddSingleton<IFindFlight, FindFlight>();
+	services.AddSingleton<IFlightStatus, FlightStatus>();
 	services.AddDbContext<FlightTaskDbContext>(options => options.UseNpgsql(connectionString));
 
 	ServiceProvider serviceProvider = services.BuildServiceProvider();

@@ -1,17 +1,19 @@
-﻿using FlightTaskProject.Business.Model;
+﻿using FlightTaskProject.Business;
+using FlightTaskProject.Business.Model;
+using FlightTaskProject.Controller.Model;
 using FlightTaskProject.DataContext;
 using FlightTaskProject.Extensions.CreateCSVFile;
 using Microsoft.EntityFrameworkCore;
 
-namespace FlightTaskProject.Business
+namespace FlightTaskProject.Controller
 {
-	public class FindFlight
+    public class FindFlight: IFindFlight
 	{
 		private readonly FlightTaskDbContext _context;
 		private readonly ICreateCSVFile _createCsv;
-		private readonly FlightStatus _flightStatus;
+		private readonly IFlightStatus _flightStatus;
 
-		public FindFlight(FlightTaskDbContext context, ICreateCSVFile createCsv, FlightStatus flightStatus)
+		public FindFlight(FlightTaskDbContext context, ICreateCSVFile createCsv, IFlightStatus flightStatus)
 		{
 			_context = context;
 			_createCsv = createCsv;
@@ -23,7 +25,7 @@ namespace FlightTaskProject.Business
 		/// </summary>
 		/// <param name="param">Query Parameters</param>
 		/// <returns></returns>
-		public async Task CreateData(QueryParam param)
+		public async Task CreateData(QueryModel param)
 		{
 			await FindOriginAndDestinationForAgency(param);
 			var data = await FindAllData(param);
@@ -37,7 +39,7 @@ namespace FlightTaskProject.Business
 		/// </summary>
 		/// <param name="queryParam">Query Parameters</param>
 		/// <returns></returns>
-		private async Task FindOriginAndDestinationForAgency(QueryParam queryParam)
+		public async Task FindOriginAndDestinationForAgency(QueryModel queryParam)
 		{
 			try
 			{
@@ -54,8 +56,8 @@ namespace FlightTaskProject.Business
 
 				foreach (var l in list)
 				{
-					queryParam.QueryParamResult.DestinationCityIds.Add(l.DestinationCityId);
-					queryParam.QueryParamResult.OriginCityIds.Add(l.OriginCityId);
+					queryParam.QueryResultModel.DestinationCityIds.Add(l.DestinationCityId);
+					queryParam.QueryResultModel.OriginCityIds.Add(l.OriginCityId);
 				}
 			}
 			catch (Exception e)
@@ -69,7 +71,7 @@ namespace FlightTaskProject.Business
 		/// </summary>
 		/// <param name="param">Query Parameters</param>
 		/// <returns></returns>
-		private async Task<List<ResultModel>?> FindAllData(QueryParam param)
+		public async Task<List<ResultModel>?> FindAllData(QueryModel param)
 		{
 			List<ResultModel>? flightInfoList = null;
 
@@ -79,7 +81,7 @@ namespace FlightTaskProject.Business
 					from fl in _context.Flights
 					join rt in _context.Routes on fl.RouteId equals rt.RouteId
 					where rt.DepartureDate <= param.EndDate && rt.DepartureDate >= param.StartDate &&
-						  param.QueryParamResult.DestinationCityIds.Contains(rt.DestinationCityId) && param.QueryParamResult.OriginCityIds.Contains(rt.OriginCityId)
+						  param.QueryResultModel.DestinationCityIds.Contains(rt.DestinationCityId) && param.QueryResultModel.OriginCityIds.Contains(rt.OriginCityId)
 					orderby fl.DepartureTime
 					select new ResultModel
 					{
@@ -105,4 +107,5 @@ namespace FlightTaskProject.Business
 		}
 
 	}
+	 
 }

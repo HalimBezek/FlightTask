@@ -1,8 +1,8 @@
 ﻿using FlightTaskProject.Business.Model;
 
-namespace FlightTaskProject.Business
+namespace FlightTaskProject.Controller
 {
-	public class FlightStatus
+	public class FlightStatus: IFlightStatus
 	{
 		/// <summary>
 		/// Check flight status info
@@ -23,9 +23,9 @@ namespace FlightTaskProject.Business
 		/// <summary>
 		/// Set flight status info
 		/// </summary>
-		/// <param name="flightInfo">flight informatin</param>
+		/// <param name="flightInfo">flight information</param>
 		/// <param name="groupModel">Result model after group by</param>
-		private void SetStatus(List<ResultModel>? flightInfo, IEnumerable<ResultModel> groupModel)
+		public void SetStatus(List<ResultModel>? flightInfo, IEnumerable<ResultModel> groupModel)
 		{
 			int i = 0;
 			List<ResultModel> groupList = groupModel.ToList();
@@ -52,7 +52,7 @@ namespace FlightTaskProject.Business
 		/// <param name="flightInfo"></param>
 		/// <param name="groupList">Model list after group by</param>
 		/// <param name="model">ResultModel from forEach</param>
-		private void SetNewStatus(List<ResultModel> flightInfo, List<ResultModel> groupList, ResultModel model)
+		public void SetNewStatus(List<ResultModel> flightInfo, List<ResultModel> groupList, ResultModel model)
 		{
 			var newDateStart = model.departure_time.AddDays(-7).AddMinutes(-30);
 			var newDateEnd = model.departure_time.AddDays(-7).AddMinutes(+30);
@@ -66,7 +66,7 @@ namespace FlightTaskProject.Business
 		/// <param name="flightInfo">Flight info list</param>
 		/// <param name="groupList">Model list after group by</param>
 		/// <param name="model">ResultModel from forEach</param>
-		private void SetDiscontinuedStatus(List<ResultModel> flightInfo, List<ResultModel> groupList, ResultModel model)
+		public void SetDiscontinuedStatus(List<ResultModel> flightInfo, List<ResultModel> groupList, ResultModel model)
 		{
 			var discontinuedDateStart = model.departure_time.AddDays(+7).AddMinutes(-30);
 			var discontinuedDateEnd = model.departure_time.AddDays(+7).AddMinutes(+30);

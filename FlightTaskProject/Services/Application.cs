@@ -1,15 +1,17 @@
 ﻿using System.Globalization;
 using FlightTaskProject.Business;
+using FlightTaskProject.Controller;
+using FlightTaskProject.Controller.Model;
 using FlightTaskProject.Extensions.CheckHelpers;
 
 namespace FlightTaskProject.Services
 {
     public class Application
     {
-        private readonly Flight _flight;
+        private readonly IFlight _flight;
         private readonly ICheckProvidedData _checkProvidedData;
 
-        public Application(Flight flight, ICheckProvidedData checkProvidedData)
+        public Application(IFlight flight, ICheckProvidedData checkProvidedData)
         {
 	        _flight = flight;
             _checkProvidedData = checkProvidedData;
@@ -29,7 +31,7 @@ namespace FlightTaskProject.Services
                 provided = Console.ReadLine();
             }
 
-            QueryParam param = FillModel(provided);
+            QueryModel param = FillModel(provided);
 
             _flight.Run(param).Wait();
         }
@@ -39,9 +41,9 @@ namespace FlightTaskProject.Services
         /// </summary>
         /// <param name="provided">provided data</param>
         /// <returns></returns>
-        private QueryParam FillModel(string provided)
+        private QueryModel FillModel(string provided)
         {
-            QueryParam param = new QueryParam(new QueryParamResult(new List<int>(),new List<int?>()));
+            QueryModel param = new QueryModel(new QueryResultModel(new List<int>(),new List<int?>()));
 
             param.StartDate = DateTime.ParseExact(provided.Split(" ")[0], "yyyy-MM-dd", CultureInfo.InvariantCulture); 
             param.EndDate = DateTime.ParseExact(provided.Split(" ")[1], "yyyy-MM-dd", CultureInfo.InvariantCulture);
