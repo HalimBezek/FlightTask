@@ -1,4 +1,5 @@
 ﻿using CsvHelper;
+using FlightTaskProject.Business.Model;
 using System.Collections;
 using System.Globalization;
 
@@ -10,7 +11,7 @@ namespace FlightTaskProject.Extensions.CreateCSVFile
         /// Create CSV File from data
         /// </summary>
         /// <returns></returns>
-        public async Task CreateFile(IEnumerable data)
+        public async Task CreateFile(List<ResultModel>? data)
         {
             string path = $"flight_{DateTime.Now:yyyy-MM-dd_hh-mm-ss}.csv";
             string folder = @"C:\FlightTask\CSVFiles\";
@@ -21,7 +22,7 @@ namespace FlightTaskProject.Extensions.CreateCSVFile
 
             await using var writer = new StreamWriter(folder + path);
             await using var csv = new CsvWriter(writer, CultureInfo.InvariantCulture);
-
+           
             await csv.WriteRecordsAsync(data);
         }
     }

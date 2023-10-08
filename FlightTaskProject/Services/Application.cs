@@ -6,12 +6,12 @@ namespace FlightTaskProject.Services
 {
     public class Application
     {
-        private readonly CheckFlight _checkFlight;
+        private readonly Flight _flight;
         private readonly ICheckProvidedData _checkProvidedData;
 
-        public Application(CheckFlight checkFlight, ICheckProvidedData checkProvidedData)
+        public Application(Flight flight, ICheckProvidedData checkProvidedData)
         {
-	        _checkFlight = checkFlight;
+	        _flight = flight;
             _checkProvidedData = checkProvidedData;
 		}
         public void RunApp()
@@ -31,7 +31,7 @@ namespace FlightTaskProject.Services
 
             QueryParam param = FillModel(provided);
 
-            _checkFlight.CreateData(param).Wait();
+            _flight.Run(param).Wait();
         }
 
         /// <summary>
@@ -41,7 +41,8 @@ namespace FlightTaskProject.Services
         /// <returns></returns>
         private QueryParam FillModel(string provided)
         {
-            QueryParam param = new QueryParam();
+            QueryParam param = new QueryParam(new QueryParamResult(new List<int>(),new List<int?>()));
+
             param.StartDate = DateTime.ParseExact(provided.Split(" ")[0], "yyyy-MM-dd", CultureInfo.InvariantCulture); 
             param.EndDate = DateTime.ParseExact(provided.Split(" ")[1], "yyyy-MM-dd", CultureInfo.InvariantCulture);
 			param.AgencyId = Convert.ToInt32(provided.Split(" ")[2]);

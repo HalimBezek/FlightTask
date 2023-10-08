@@ -15,7 +15,9 @@ try
 	services.AddSingleton<ICheckProvidedData, CheckProvidedData>();
 	services.AddSingleton<ICheckDataType, CheckDataType>();
 	services.AddSingleton<ICreateCSVFile, CreateCSVFile>();
-	services.AddSingleton<CheckFlight, CheckFlight>();
+	services.AddSingleton<Flight, Flight>();
+	services.AddSingleton<FindFlight, FindFlight>();
+	services.AddSingleton<FlightStatus, FlightStatus>();
 	services.AddDbContext<FlightTaskDbContext>(options => options.UseNpgsql(connectionString));
 
 	ServiceProvider serviceProvider = services.BuildServiceProvider();
