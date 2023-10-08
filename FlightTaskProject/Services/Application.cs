@@ -1,5 +1,4 @@
-﻿using System.Globalization;
-using FlightTaskProject.Business;
+﻿using System.Globalization; 
 using FlightTaskProject.Controller;
 using FlightTaskProject.Controller.Model;
 using FlightTaskProject.Extensions.CheckHelpers;
@@ -23,17 +22,24 @@ namespace FlightTaskProject.Services
 
         private void BuildApp()
         {
-			Console.WriteLine("Please provide date ranges and agency id \nShould be yyyy-MM-dd yyyy-MM-dd id in order");
-            string? provided = Console.ReadLine();
+	        try
+	        {
+		        Console.WriteLine("Please provide date ranges and agency id \nShould be yyyy-MM-dd yyyy-MM-dd id in order");
+		        string? provided = Console.ReadLine();
 
-            while (!_checkProvidedData.CheckAndResult(provided))
-            {
-                provided = Console.ReadLine();
-            }
+		        while (!_checkProvidedData.CheckAndResult(provided))
+		        {
+			        provided = Console.ReadLine();
+		        }
 
-            QueryModel param = FillModel(provided);
+		        QueryModel param = FillModel(provided);
 
-            _flight.Run(param).Wait();
+		        _flight.Run(param).Wait();
+			}
+	        catch (Exception e)
+	        {
+		        Console.WriteLine("Error: " + e.Message);
+	        }
         }
 
         /// <summary>

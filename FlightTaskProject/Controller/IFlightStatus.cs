@@ -1,4 +1,4 @@
-﻿using FlightTaskProject.Business.Model;
+﻿using FlightTaskProject.Controller.Model;
 
 namespace FlightTaskProject.Controller
 {

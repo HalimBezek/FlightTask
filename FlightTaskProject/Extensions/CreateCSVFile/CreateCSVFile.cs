@@ -1,7 +1,6 @@
 ﻿using CsvHelper;
-using FlightTaskProject.Business.Model;
-using System.Collections;
 using System.Globalization;
+using FlightTaskProject.Controller.Model;
 
 namespace FlightTaskProject.Extensions.CreateCSVFile
 {

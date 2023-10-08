@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using FlightTaskProject.Business;
-using FlightTaskProject.Business.Model;
+﻿using FlightTaskProject.Controller.Model;
 
 namespace FlightTaskProject.Extensions.CreateCSVFile
 {

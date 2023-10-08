@@ -1,6 +1,4 @@
-﻿using FlightTaskProject.Business;
-using FlightTaskProject.Business.Model;
-using FlightTaskProject.Controller.Model;
+﻿using FlightTaskProject.Controller.Model;
 using FlightTaskProject.DataContext;
 using FlightTaskProject.Extensions.CreateCSVFile;
 using Microsoft.EntityFrameworkCore;

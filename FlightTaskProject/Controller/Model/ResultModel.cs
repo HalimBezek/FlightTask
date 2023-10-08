@@ -1,4 +1,4 @@
-﻿namespace FlightTaskProject.Business.Model
+﻿namespace FlightTaskProject.Controller.Model
 {
 	public class ResultModel
 	{

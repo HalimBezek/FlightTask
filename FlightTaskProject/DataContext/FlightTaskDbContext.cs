@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using FlightTaskProject.Models;
+﻿using FlightTaskProject.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace FlightTaskProject.DataContext;

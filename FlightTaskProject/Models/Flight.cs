@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace FlightTaskProject.Models;
+﻿namespace FlightTaskProject.Models;
 
 public partial class Flight
 {
