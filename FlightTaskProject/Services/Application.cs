@@ -1,25 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Globalization;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Globalization;
 using FlightTaskProject.Business;
-using FlightTaskProject.DataContext;
 using FlightTaskProject.Extensions.CheckHelpers;
-using Microsoft.EntityFrameworkCore;
 
 namespace FlightTaskProject.Services
 {
     public class Application
     {
-        private FlightTaskDbContext _context;
+        private readonly CheckFlight _checkFlight;
+        private readonly ICheckProvidedData _checkProvidedData;
 
-        public Application(FlightTaskDbContext context)
+        public Application(CheckFlight checkFlight, ICheckProvidedData checkProvidedData)
         {
-            _context = context;
-
-        }
+	        _checkFlight = checkFlight;
+            _checkProvidedData = checkProvidedData;
+		}
         public void RunApp()
         {
             BuildApp();
@@ -27,21 +21,17 @@ namespace FlightTaskProject.Services
 
         private void BuildApp()
         {
-            CheckProvidedData check = new CheckProvidedData();//todo: note : can be static or dpInjection, refactor
-
-			Console.WriteLine("Please provide date ranges and agency id");
-            Console.WriteLine("Should be yyyy-MM-dd yyyy-MM-dd id in order");
+			Console.WriteLine("Please provide date ranges and agency id \nShould be yyyy-MM-dd yyyy-MM-dd id in order");
             string? provided = Console.ReadLine();
 
-            while (!check.CheckAndResult(provided))
+            while (!_checkProvidedData.CheckAndResult(provided))
             {
                 provided = Console.ReadLine();
             }
 
-            QueryParam parapm = FillModel(provided);
+            QueryParam param = FillModel(provided);
 
-            CheckFlight cc = new CheckFlight(_context);//todo: note : can be static or dpInjection, refactor
-			cc.CreateData(parapm).Wait();
+            _checkFlight.CreateData(param).Wait();
         }
 
         /// <summary>

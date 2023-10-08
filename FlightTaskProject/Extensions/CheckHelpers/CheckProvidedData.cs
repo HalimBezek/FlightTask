@@ -1,8 +1,13 @@
 ﻿namespace FlightTaskProject.Extensions.CheckHelpers
 {
-    internal class CheckProvidedData: ICheckProvidedData
+	public class CheckProvidedData: ICheckProvidedData
 	{
-        private ICheckDataType _checkData;
+        private readonly ICheckDataType _checkDataType;
+
+        public CheckProvidedData(ICheckDataType checkDataType)
+        {
+			_checkDataType = checkDataType;
+		}
 
         /// <summary>
         /// Check provided data for all exceptional typing
@@ -10,9 +15,7 @@
         /// <param name="provided"></param>
         /// <returns></returns>
         public bool CheckAndResult(string? provided)
-        {
-            _checkData = new CheckDataType();//todo: can be static or dpInjection, refactor
-
+        { 
             if (string.IsNullOrWhiteSpace(provided))
             {
                 Console.WriteLine("Please provide date ranges and agency id.");
@@ -25,19 +28,19 @@
                 return false;
             }
 
-            if (!_checkData.CheckDate(provided.Split(" ")[0], out DateTime? startDate))
+            if (!_checkDataType.CheckDate(provided.Split(" ")[0], out DateTime? startDate))
             {
                 Console.WriteLine("Start date format should be yyyy-MM-dd.");
                 return false;
             }
 
-            if (!_checkData.CheckDate(provided.Split(" ")[1], out DateTime? endDate))
+            if (!_checkDataType.CheckDate(provided.Split(" ")[1], out DateTime? endDate))
             {
                 Console.WriteLine("End date format should be yyyy-MM-dd.");
                 return false;
             }
 
-            if (!_checkData.CheckInt(provided.Split(" ")[2], out int? agencyId))
+            if (!_checkDataType.CheckInt(provided.Split(" ")[2], out int? agencyId))
             {
                 Console.WriteLine("Agency Id should be a integer value.");
                 return false;
